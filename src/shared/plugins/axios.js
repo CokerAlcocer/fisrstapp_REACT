@@ -5,8 +5,8 @@ const axios = instance.create({
 });
 
 const requestHandler = (request) =>{
-    request.headers("Accept") = "application/json";
-    request.headers("Content-Type") = "application/json";
+    request.headers["Accept"] = "application/json";
+    request.headers["Content-Type"] = "application/json";
     const session =  JSON.parse(localStorage.getItem("user")) || null;
     if(session){
         request.headers["Authorization"] = `Bearer ${session.token}`;
@@ -22,8 +22,8 @@ const successResponseHandler = (response) =>{
     return response.data;
 }
 
-axios.intesceptors.request.use((request)=>requestHandler(request));
-axios.intesceptors.response.use(
+axios.interceptors.request.use((request)=>requestHandler(request));
+axios.interceptors.response.use(
     (response) => successResponseHandler(response),
     (err) => errorResponseHandler(err)
 );
